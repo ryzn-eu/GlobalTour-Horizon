@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Tour | Viaggi & Vacanze Esclusive</title>
+    <title>GlobaTour by Horizon Global</title>
     <style>
         /* =========================================
            VARIABILI & DESIGN BORGHESE / CLEAN
@@ -445,10 +445,11 @@
             const pkg = packages.find(p => p.id == id);
             const finalPrice = pkg ? Math.round(pkg.base * INCREASE) : 0;
             
-            const clientData = {
+            const formData = {
                 packageId: id,
                 packageName: pkg ? pkg.title : '',
                 totalPrice: finalPrice,
+                sourceUrl: pkg ? pkg.sourceUrl : '',
                 nome: document.getElementById('clientNome').value,
                 cognome: document.getElementById('clientCognome').value,
                 email: document.getElementById('clientEmail').value,
@@ -456,33 +457,31 @@
                 dob: document.getElementById('clientDob').value,
                 doc: document.getElementById('clientDoc').value,
                 address: document.getElementById('clientAddress').value,
-                notes: document.getElementById('clientNotes').value,
-                sourceUrl: pkg ? pkg.sourceUrl : ''
+                notes: document.getElementById('clientNotes').value
             };
 
-            const subject = encodeURIComponent(`Nuova Prenotazione Global Tour - ${clientData.packageName}`);
-            const body = encodeURIComponent(
-                `Dettagli Prenotazione:\n\n` +
-                `Pacchetto: ${clientData.packageName}\n` +
-                `Prezzo Totale (con ricarico 15%): € ${clientData.totalPrice}\n` +
-                `Link Origine (Staff): ${clientData.sourceUrl}\n\n` +
-                `Dati Cliente:\n` +
-                `Nome: ${clientData.nome} ${clientData.cognome}\n` +
-                `Email: ${clientData.email}\n` +
-                `Telefono: ${clientData.phone}\n` +
-                `Data di Nascita: ${clientData.dob}\n` +
-                `Documento: ${clientData.doc}\n` +
-                `Indirizzo: ${clientData.address}\n` +
-                `Note: ${clientData.notes}\n`
-            );
-
-            window.location.href = `mailto:servizihorizon@gmail.com?subject=${subject}&body=${body}`;
-            
-            alert('Richiesta inviata con successo! Verrai reindirizzato al client email per la trasmissione ufficiale allo staff di Global Tour.');
-            closeModal();
-            document.getElementById('bookingForm').reset();
+            // Invia i dati al file send-mail.php sul tuo server
+            fetch('send-mail.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    alert('Richiesta inviata con successo! Lo staff di Global Tour ti ricontatterà presto.');
+                    closeModal();
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    alert('Errore nell\'invio: ' + (data.message || 'Riprova più tardi.'));
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Errore di connessione al server.');
+            });
         }
-
+        
         window.onload = () => {
             renderPackages(packages);
         };
