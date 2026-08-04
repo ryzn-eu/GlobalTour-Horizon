@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Tour | Viaggi & Vacanze Esclusive</title>
+    <style>
+        /* =========================================
+           VARIABILI & DESIGN BORGHESE / CLEAN
+           ========================================= */
+        :root {
+            --bg-body: #ffffff;
+            --bg-card: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --teal: #0d9488;
+            --teal-dark: #0f766e;
+            --teal-light: #f0fdfa;
+            --nav-height: 90px;
+            --card-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            --transition: all 0.3s ease;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif; }
+        body { background: var(--bg-body); color: var(--text-main); line-height: 1.7; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 4px; }
+
+        /* =========================================
+           HEADER & LOGO FIRMA ESCLUSIVO CON AEREO
+           ========================================= */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 6%; z-index: 1000; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid #f1f5f9;
+            transition: var(--transition);
+        }
+        .brand-logo { display: flex; align-items: center; text-decoration: none; }
+        .luxury-logo-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        header .header-info { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; }
+
+        /* =========================================
+           HERO CON TRAMONTO SUL MARE & SEARCH SMART
+           ========================================= */
+        .hero {
+            margin-top: var(--nav-height);
+            min-height: 60vh; width: 100%; position: relative; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            background: linear-gradient(rgba(15, 23, 42, 0.45), rgba(15, 23, 42, 0.65)), 
+                        url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+            padding: 4rem 2rem;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 850px; width: 100%; }
+        .hero-title { font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 800; color: #ffffff; letter-spacing: -0.5px; margin-bottom: 1rem; }
+        .hero-subtitle { font-size: clamp(1rem, 1.5vw, 1.15rem); color: #f1f5f9; font-weight: 300; margin-bottom: 2.5rem; }
+
+        /* Barra di Ricerca Smart */
+        .search-container { position: relative; width: 100%; max-width: 600px; margin: 0 auto; }
+        .search-input {
+            width: 100%; padding: 1.15rem 2rem; font-size: 1rem; border-radius: 50px; border: none; outline: none;
+            background: #ffffff; color: var(--text-main); box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            transition: var(--transition);
+        }
+        .search-input:focus { box-shadow: 0 20px 40px rgba(13, 148, 136, 0.25); transform: translateY(-2px); }
+
+        /* =========================================
+           SEZIONE CHI SIAMO & 6 CARD SIMMETRICHE (3x3)
+           ========================================= */
+        .about-agency {
+            background: var(--bg-body);
+            padding: 6rem 8%;
+            text-align: center;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .about-agency h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--text-main); letter-spacing: -0.5px; }
+        .about-agency p { max-width: 850px; margin: 0 auto 1.2rem; font-size: 1.05rem; color: var(--text-muted); line-height: 1.8; }
+        
+        /* Griglia a 6 elementi (3 e 3) */
+        .agency-features {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; text-align: left;
+        }
+        @media(max-width: 1024px) { .agency-features { grid-template-columns: repeat(2, 1fr); } }
+        @media(max-width: 650px) { .agency-features { grid-template-columns: 1fr; } }
+
+        .agency-feature-card {
+            background: var(--teal-light); padding: 2rem; border-radius: 16px; border: 1px solid rgba(13, 148, 136, 0.15);
+            transition: var(--transition);
+        }
+        .agency-feature-card:hover { transform: translateY(-5px); border-color: var(--teal); }
+        .agency-feature-card h4 { font-size: 1.05rem; margin-bottom: 0.6rem; font-weight: 700; color: var(--teal-dark); display: flex; align-items: center; gap: 8px; }
+        .agency-feature-card p { font-size: 0.9rem; margin: 0; color: var(--text-muted); }
+
+        /* =========================================
+           CONTAINER PRINCIPALE & GRIGLIA PACCHETTI
+           ========================================= */
+        .main-container { max-width: 1400px; margin: 0 auto; padding: 5rem 2rem; background: #fcfcfc; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-size: 2.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--text-muted); font-size: 1.05rem; }
+
+        .packages-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 2.5rem; }
+
+        /* Card Pacchetto Dettagliata */
+        .package-card {
+            background: var(--bg-card); border-radius: 16px; overflow: hidden; box-shadow: var(--card-shadow);
+            border: 1px solid #e2e8f0; display: flex; flex-direction: column; transition: var(--transition);
+        }
+        .package-card:hover { transform: translateY(-6px); box-shadow: 0 20px 35px rgba(0,0,0,0.08); border-color: var(--teal); }
+        
+        .card-img-wrapper { position: relative; height: 240px; overflow: hidden; background: #cbd5e1; }
+        .card-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .package-card:hover .card-img-wrapper img { transform: scale(1.05); }
+        .card-tag {
+            position: absolute; top: 15px; left: 15px; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(4px);
+            color: #fff; padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .card-body { padding: 2rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-meta { display: flex; gap: 8px; margin-bottom: 0.8rem; flex-wrap: wrap; }
+        .meta-pill { background: #e2e8f0; color: var(--text-muted); padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+
+        .card-title { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.3; color: var(--text-main); }
+        .card-desc { font-size: 0.92rem; color: var(--text-muted); margin-bottom: 1.5rem; flex-grow: 1; line-height: 1.6; }
+
+        .card-features { border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; padding: 0.9rem 0; margin-bottom: 1.5rem; display: flex; justify-content: space-between; font-size: 0.82rem; color: #475569; }
+        .card-features span { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .price-box .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; display: block; }
+        .price-box .amount { font-size: 1.7rem; font-weight: 900; color: var(--teal-dark); }
+        
+        .btn-book {
+            background: var(--teal); color: #fff; border: none; padding: 0.75rem 1.6rem; border-radius: 30px;
+            font-weight: 700; cursor: pointer; transition: var(--transition); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px;
+        }
+        .btn-book:hover { background: var(--teal-dark); }
+
+        /* =========================================
+           MODALE DI PRENOTAZIONE CON DATI ESSENZIALI
+           ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center; z-index: 2000;
+            opacity: 0; pointer-events: none; transition: var(--transition); padding: 1rem;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-card {
+            background: #ffffff; width: 100%; max-width: 650px; border-radius: 20px;
+            padding: 2.5rem; box-shadow: 0 25px 50px rgba(0,0,0,0.25); max-height: 90vh; overflow-y: auto;
+            transform: translateY(20px); transition: var(--transition);
+        }
+        .modal-overlay.active .modal-card { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem; }
+        .modal-header h3 { font-size: 1.4rem; font-weight: 800; color: var(--text-main); }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); }
+        
+        .modal-package-info { background: var(--teal-light); padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--teal-dark); font-weight: 600; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group.full { grid-column: span 2; }
+        .form-group label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.4rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; transition: var(--transition);
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
+        .form-submit-btn {
+            width: 100%; background: var(--teal); color: #fff; border: none; padding: 1rem; border-radius: 8px;
+            font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition); margin-top: 1rem;
+        }
+        .form-submit-btn:hover { background: var(--teal-dark); }
+
+        /* =========================================
+           FOOTER DETTAGLIATO
+           ========================================= */
+        footer { background: #0f172a; color: #fff; padding: 5rem 10% 3rem; text-align: center; border-top: 4px solid var(--teal); }
+        .footer-logo { font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; margin-bottom: 1rem; }
+        .footer-logo span { color: var(--teal); }
+        .footer-details { max-width: 650px; margin: 0 auto 2.5rem; color: #94a3b8; font-size: 0.95rem; line-height: 1.8; }
+        .footer-details p { margin-bottom: 0.4rem; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; font-size: 0.85rem; color: #64748b; }
+
+        @media(max-width: 768px) {
+            header { padding: 0 1.5rem; }
+            .packages-grid { grid-template-columns: 1fr; }
+            .about-agency { padding: 4rem 5%; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="navbar">
+        <a href="#" class="brand-logo">
+            <div class="luxury-logo-container">
+                <svg viewBox="0 0 320 80" width="180" height="48">
+                    <path d="M 15 48 Q 75 12, 160 38 T 305 22" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-dasharray="5 4" opacity="0.65"/>
+                    <g transform="translate(155, 28) scale(0.65) rotate(-12)">
+                        <path d="M21 16v-2l-8-5V3.5c-.83-.34-1.5-.83-1.5-1.5S10.83.67 10 1c-.83.33-1.5.83-1.5 1.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" fill="var(--teal)"/>
+                    </g>
+                    <text x="20" y="56" font-family="'Brush Script MT', 'Great Vibes', 'Parisienne', cursive, sans-serif" font-size="40" font-weight="bold" fill="var(--text-main)" style="letter-spacing: 0.5px;">Global <tspan fill="var(--teal)">Tour</tspan></text>
+                </svg>
+            </div>
+        </a>
+        <div class="header-info">Collezione Esclusiva 2026 • Pacchetti Esclusivi</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Pacchetti Vacanza Completi</h1>
+            <p class="hero-subtitle">Voli di linea, resort esclusivi e servizi sartoriali firmati Global Tour.</p>
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Cerca destinazione (es. Marrakech, Sahara, Bucarest...)" oninput="filterPackages()">
+            </div>
+        </div>
+    </section>
+
+    <!-- SEZIONE CHI SIAMO -->
+    <section class="about-agency">
+        <h2>L'Eccellenza dei Viaggi su Misura</h2>
+        <p><strong>Global Tour</strong> è l'agenzia di viaggi e tour operator d'elite (progetto e marchio di Horizon Global TM) dedicata a chi cerca esperienze di livello superiore. Selezioniamo personalmente ogni destinazione, garantendo standard alberghieri d'eccellenza, voli accurati e logistica impeccabile.</p>
+        <p>I nostri pacchetti combinano il meglio del turismo globale con la massima trasparenza e sicurezza contrattuale.</p>
+        
+        <div class="agency-features">
+            <div class="agency-feature-card">
+                <h4>✈️ Voli & Trasferimenti VIP</h4>
+                <p>Soluzioni con le migliori compagnie di linea, transfer privati con autista e collegamenti dedicati inclusi.</p>
+            </div>
+            <div class="agency-feature-card">
+                <h4>🏨 Resort 5 Stelle Selezionati</h4>
+                <p>Pernottamenti in strutture di altissimo profilo, overwater villas, boutique hotel e dimore di lusso.</p>
+            </div>
+            <div class="agency-feature-card">
+                <h4>🗺️ Escursioni Selezionate</h4>
+                <p>Tour guidati con esperti locali, accessi prioritari e itinerari culturali unici e curati nei dettagli.</p>
+            </div>
+            <div class="agency-feature-card">
+                <h4>🛎️ Assistenza Dedicata 24/7</h4>
+                <p>Un team di concierge di viaggio sempre a disposizione prima, durante e dopo il vostro soggiorno.</p>
+            </div>
+            <div class="agency-feature-card">
+                <h4>🛡️ Assicurazione Medico-Bagaglio</h4>
+                <p>Copertura assicurativa completa globale inclusa in ogni pacchetto per viaggiare in totale serenità.</p>
+            </div>
+            <div class="agency-feature-card">
+                <h4>💼 Garanzia Prezzo & Flessibilità</h4>
+                <p>Massima protezione contrattuale, modifiche flessibili e tariffa trasparente bloccata.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LISTA DEI PACCHETTI -->
+    <div class="main-container">
+        <div class="section-header">
+            <h2>I Nostri Pacchetti Esclusivi</h2>
+            <p>Seleziona la tua destinazione e compila il modulo di prenotazione con i dati richiesti.</p>
+        </div>
+        <div id="packagesContainer">
+            <!-- Popolato dinamicamente -->
+        </div>
+    </div>
+
+    <!-- MODALE DI PRENOTAZIONE DATI ESSENZIALI -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>Richiesta di Prenotazione</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-package-info" id="modalPackageInfo"></div>
+            
+            <form id="bookingForm" onsubmit="submitBooking(event)">
+                <input type="hidden" id="packageIdHidden">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nome *</label>
+                        <input type="text" id="clientNome" required placeholder="Inserisci il tuo nome">
+                    </div>
+                    <div class="form-group">
+                        <label>Cognome *</label>
+                        <input type="text" id="clientCognome" required placeholder="Inserisci il tuo cognome">
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="clientEmail" required placeholder="tuareg@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefono / Cellulare *</label>
+                        <input type="tel" id="clientPhone" required placeholder="+39 333 1234567">
+                    </div>
+                    <div class="form-group">
+                        <label>Data di Nascita *</label>
+                        <input type="date" id="clientDob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Numero Passaporto / Documento *</label>
+                        <input type="text" id="clientDoc" required placeholder="AB1234567">
+                    </div>
+                    <div class="form-group full">
+                        <label>Indirizzo di Residenza (Via, Città, CAP) *</label>
+                        <input type="text" id="clientAddress" required placeholder="Via Roma 1, Milano, 20121">
+                    </div>
+                    <div class="form-group full">
+                        <label>Note o Richieste Particolari (Es. intolleranze, preferenze letto)</label>
+                        <textarea id="clientNotes" rows="3" placeholder="Eventuali esigenze speciali..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="form-submit-btn">Invia Dati e Conferma a Global Tour</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Global <span>Tour</span></div>
+        <div class="footer-details">
+            <p><strong>Horizon Global TM</strong> (Società Proprietaria del Marchio Global Tour)</p>
+            <p>Partita IVA: 401 382 916 83 | Telefono: 0305409202</p>
+            <p>Sede Centrale: Via Giuseppe Mazzini 68, Alfianello (BS) 25020, Italia</p>
+            <p style="margin-top: 15px; color: var(--teal); font-weight: 600;">Contatto prenotazioni ufficiali: Servizihorizon@gmail.com</p>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Global Tour by Horizon Global TM. Tutti i diritti riservati.</p>
+        </div>
+    </footer>
+
+    <script>
+        const INCREASE = 1.15; // Ricarico del 15% per l'agenzia
+
+        const U = "https://images.unsplash.com/photo-";
+        const E = "?auto=format&fit=crop&w=800&q=80";
+
+        // DATABASE PACCHETTI DEFINITIVO (Senza Costa Rica e Bucovina)
+        const packages = [
+            { id: 1, dest: "Maldive", title: "Atollo di Ari: Overwater Resort", desc: "Volo in Business Class, trasferimenti in idrovolante e soggiorno in villa palafitta con piscina privata sull'oceano.", duration: "8 Giorni / 7 Notti", flight: "Volo Diretto incluso", hotel: "Resort 5 Stelle Lusso", base: 3400, img: U + '1514282401047-d79a71a590e8' + E, tag: "All Inclusive", sourceUrl: "https://www.maldivesresorts-example.com" },
+            { id: 2, dest: "Zanzibar", title: "Zanzibar: Spiagge e Safari Blu", desc: "Volo di linea, resort pieds dans l'eau a Nungwi, escursione privata in barca a vela e cene a base di pesce fresco.", duration: "9 Giorni / 8 Notti", flight: "Volo + Transfer VIP", hotel: "Boutique Hotel 5★", base: 2800, img: U + '1586861635167-e5223aadc9fe' + E, tag: "Best Seller", sourceUrl: "https://www.zanzibartravel-example.com" },
+            { id: 3, dest: "Giappone", title: "Giappone: Tokyo, Kyoto e Ryokan", desc: "Tour completo con treno Shinkansen, guide storiche private, pernottamenti in ryokan tradizionali e cene kaiseki.", duration: "12 Giorni / 11 Notti", flight: "Volo Intercontinentale", hotel: "Luxury Ryokan & Hotel", base: 4500, img: U + '1493976040374-85c8e12f0c0e' + E, tag: "Culturale", sourceUrl: "https://www.japantravel-example.com" },
+            { id: 4, dest: "Dubai", title: "Dubai: Burj Al Khalifa & Deserto", desc: "Volo Emirates, soggiorno in hotel iconico, accesso VIP al Burj Al Khalifa e safari notturno nel deserto con cena stellata.", duration: "7 Giorni / 6 Notti", flight: "Volo First Class", hotel: "Palace Hotel 5★L", base: 3100, img: U + '1512453979798-5ea266f8880c' + E, tag: "Glamour", sourceUrl: "https://www.dubaitourism-example.com" },
+            { id: 5, dest: "Seychelles", title: "Seychelles: La Digue & Praslin", desc: "Volo di linea, traghetti interni privati e soggiorno in villa immersa nella natura incontaminata delle spiagge di granito.", duration: "10 Giorni / 9 Notti", flight: "Volo + Traghetto VIP", hotel: "Eco-Luxury Resort", base: 3900, img: U + '1471922694854-ff1b63b20054' + E, tag: "Natura & Relax", sourceUrl: "https://www.seychelles-example.com" },
+            { id: 6, dest: "Islanda", title: "Islanda: Aurori Boreali e Terme", desc: "Volo diretto, tour guidato in Super Jeep dei vulcani, cascate e accesso illimitato ed esclusivo alla Blue Lagoon.", duration: "8 Giorni / 7 Notti", flight: "Volo Inclusi", hotel: "Design Hotel 4★S", base: 2600, img: U + '1529963183134-61a90db47eaf' + E, tag: "Avventura", sourceUrl: "https://www.icelandtour-example.com" },
+            { id: 7, dest: "Bali", title: "Bali: Spiritualità a Ubud & Seminyak", desc: "Volo internazionale, trasferimenti privati, yoga retreat immerso tra le risaie e villa di design con piscina a sfioro.", duration: "11 Giorni / 10 Notti", flight: "Volo + Transfer", hotel: "Villa Privata & Spa", base: 2900, img: U + '1537996194471-e657df975ab4' + E, tag: "Wellness", sourceUrl: "https://www.balitravel-example.com" },
+            { id: 8, dest: "New York", title: "New York: Manhattan Experience", desc: "Volo diretto, hotel a due passi da Times Square, biglietti per musical a Broadway e tour in elicottero della skyline.", duration: "7 Giorni / 6 Notti", flight: "Volo Diretto", hotel: "Times Square Hotel 5★", base: 3200, img: U + '1496442226666-8d4d0e62e6e9' + E, tag: "Metropoli", sourceUrl: "https://www.nyctravel-example.com" },
+            { id: 9, dest: "Parigi", title: "Parigi: Fuga Romantica & Tour Gourmet", desc: "Volo A/R, suite con vista sulla Tour Eiffel, cena di 5 portate sulla Senna e pass prioritario per i musei principali.", duration: "5 Giorni / 4 Notti", flight: "Volo A/R Veloce", hotel: "Grand Hotel parigino", base: 1950, img: U + '1511739001486-6bfe10ce785f' + E, tag: "Romantico", sourceUrl: "https://www.paris-example.com" },
+            { id: 10, dest: "Roma", title: "Roma: La Dolce Vita Storica", desc: "Volo nazionale o treno AV First Class, suite con vista Colosseo e tour privato notturno dei Musei Vaticani a porte chiuse.", duration: "5 Giorni / 4 Notti", flight: "Transfer VIP Incluso", hotel: "Historic Luxury Hotel", base: 1750, img: U + '1529260830199-42c24126f198' + E, tag: "Storia & Arte", sourceUrl: "https://www.rome-example.com" },
+            { id: 11, dest: "Londra", title: "Londra: Mayfair & British Style", desc: "Volo A/R, hotel di lusso a Mayfair, shopping assistant personale nei department store storici e tè pomeridiano al Ritz.", duration: "6 Giorni / 5 Notti", flight: "Volo Diretto", hotel: "Mayfair Hotel 5★", base: 2100, img: U + '1513635269975-59663e0ac1ad' + E, tag: "Shopping", sourceUrl: "https://www.london-example.com" },
+            { id: 12, dest: "Singapore", title: "Singapore: Futuro e Tradizione", desc: "Volo intercontinentale, soggiorno al Marina Bay Sands con accesso all'infinity pool panoramica e cene stellate Michelin.", duration: "8 Giorni / 7 Notti", flight: "Volo di Linea", hotel: "Marina Bay Sands Suite", base: 3600, img: U + '1508009603885-50cf7c579365' + E, tag: "Lusso Urbano", sourceUrl: "https://www.singapore-example.com" },
+            { id: 13, dest: "Miami", title: "Miami: Sole, Art Decó e Yacht", desc: "Volo diretto per la Florida, hotel a South Beach, giornata intera in yacht privato tra le isole e noleggio auto sportiva.", duration: "8 Giorni / 7 Notti", flight: "Volo A/R Diretto", hotel: "Beachfront Resort 5★", base: 3300, img: U + '1533105079780-92b9be482077' + E, tag: "Mare & Movida", sourceUrl: "https://www.miami-example.com" },
+            { id: 14, dest: "Fiji", title: "Fiji: Atolli Corallini e Relax Totale", desc: "Volo di lungo raggio, idrovolante di trasferimento e soggiorno in resort isolato con barriera corallina privata.", duration: "10 Giorni / 9 Notti", flight: "Volo + Idrovolante", hotel: "Private Island Resort", base: 4800, img: U + '1544551763-46a013bb70d5' + E, tag: "Esotico", sourceUrl: "https://www.fiji-example.com" },
+            { id: 15, dest: "Patagonia", title: "Patagonia: Ghiacciai e Trekking di Lusso", desc: "Volo intercontinentale, lodge di design all'interno del Parco Torres del Paine e guide alpine private per i ghiacciai.", duration: "12 Giorni / 11 Notti", flight: "Volo + Jeep 4x4", hotel: "Eco-Lodge & Spa", base: 5200, img: U + '1519681393784-d120267933ba' + E, tag: "Esplorazione", sourceUrl: "https://www.patagonia-example.com" },
+            { id: 16, dest: "Polinesia", title: "Polinesia: Bora Bora Overwater", desc: "Volo A/R, bungalow palafitta con vetrate sul fondale marino, escursione in barca con biologo marino e cena sulla spiaggia.", duration: "10 Giorni / 9 Notti", flight: "Volo Intercontinentale", hotel: "Overwater Bungalow 5★", base: 5900, img: U + '1506929562872-bb421503ef21' + E, tag: "Luna di Miele", sourceUrl: "https://www.borabora-example.com" },
+            { id: 17, dest: "Messico", title: "Messico: Riviera Maya & Archeologia", desc: "Volo diretto, resort all-inclusive 5 stelle superior, tour privato delle rovine maya di Tulum e Chichén Itzá con archeologo.", duration: "9 Giorni / 8 Notti", flight: "Volo A/R Diretto", hotel: "Resort Ultra All-Inc", base: 2750, img: U + '1512100356356-de1b84283e18' + E, tag: "Cultura & Mare", sourceUrl: "https://www.mexicotravel-example.com" },
+            { id: 18, dest: "Perù", title: "Perù: Ande, Cusco e Machu Picchu", desc: "Volo internazionale, treno panoramico Hiram Bingham di lusso, hotel storici e tour privato guidato a Machu Picchu.", duration: "10 Giorni / 9 Notti", flight: "Volo + Treno di Lusso", hotel: "Andean Luxury Hotels", base: 4100, img: U + '1526392060635-9d6019884377' + E, tag: "Mistero & Storia", sourceUrl: "https://www.perutravel-example.com" },
+            { id: 19, dest: "Australia", title: "Australia: Sydney e Barriera Corallina", desc: "Volo intercontinentale, hotel con vista sulla Sydney Opera House e volo in idrovolante sopra la Grande Barriera Corallina.", duration: "14 Giorni / 13 Notti", flight: "Volo A/R Linea", hotel: "City & Island Hotels", base: 6500, img: U + '1506973035872-a4ec16b8e8d9' + E, tag: "Gran Tour", sourceUrl: "https://www.australia-example.com" },
+            { id: 20, dest: "Norvegia", title: "Norvegia: Fiordi Lofoten & Crociera", desc: "Volo A/R, crociera privata nei fiordi norvegesi a bordo di nave boutique e pernottamento in tipici Rorbu modernizzati.", duration: "8 Giorni / 7 Notti", flight: "Volo Inclusi", hotel: "Boutique Rorbu & Spa", base: 3100, img: U + '1506744038136-46273834b3fb' + E, tag: "Natura Selvaggia", sourceUrl: "https://www.norway-example.com" },
+            { id: 21, dest: "Grecia", title: "Grecia: Santorini & Mykonos Sunset", desc: "Volo di linea, traghetto veloce in classe business, suite scavata nella roccia a Oia con piscina privata riscaldata.", duration: "8 Giorni / 7 Notti", flight: "Volo A/R + Traghetto", hotel: "Cliffside Suite 5★", base: 2400, img: U + '1570077188670-e3a8d69ac5ff' + E, tag: "Egeo", sourceUrl: "https://www.greecetravel-example.com" },
+            { id: 22, dest: "Thailandia", title: "Thailandia: Phuket e Phi Phi Islands", desc: "Volo intercontinentale, speedboat privata per le isole tropicali, resort con piscina privata e massaggi thailandesi inclusi.", duration: "10 Giorni / 9 Notti", flight: "Volo Diretto", hotel: "Tropical Beach Resort", base: 2300, img: U + '1552465011-b4e21bf6e79a' + E, tag: "Esotico", sourceUrl: "https://www.thailand-example.com" },
+            { id: 23, dest: "Canada", title: "Canada: Le Montagne Rocciose", desc: "Volo per Calgary, auto a noleggio SUV di lusso, pernottamento allo storico Fairmont Chateau Lake Louise e tour dei parchi.", duration: "9 Giorni / 8 Notti", flight: "Volo + SUV Incluso", hotel: "Fairmont Luxury Hotels", base: 3800, img: U + '1503614472-8c93d56e92ce' + E, tag: "Montagna", sourceUrl: "https://www.canadatravel-example.com" },
+            { id: 24, dest: "Sudafrica", title: "Sudafrica: Città del Capo & Safari", desc: "Volo A/R, tour della Penisola del Capo e soggiorno di 3 notti in lodge di lusso all'interno del Kruger Park con safari in 4x4.", duration: "11 Giorni / 10 Notti", flight: "Volo Intercontinentale", hotel: "Safari Lodge & Hotel", base: 4400, img: U + '1516426122078-c23e76319801' + E, tag: "Safari & City", sourceUrl: "https://www.southafrica-example.com" },
+            { id: 25, dest: "Brasile", title: "Brasile: Rio de Janeiro & Copacabana", desc: "Volo diretto, soggiorno al leggendario Copacabana Palace, tour in elicottero sul Cristo Redentore e guida locale dedicata.", duration: "8 Giorni / 7 Notti", flight: "Volo A/R Diretto", hotel: "Copacabana Palace 5★L", base: 3500, img: U + '1483729558449-99ef09a8c325' + E, tag: "Vibrazioni Sud", sourceUrl: "https://www.braziltravel-example.com" },
+            { id: 27, dest: "Nuova Zelanda", title: "Nuova Zelanda: Queenstown & Alpi Meridionali", desc: "Volo intercontinentale, lodge alpino di design affacciato sul Lago Wakatipu, escursioni in elicottero e fiordi di Milford Sound.", duration: "13 Giorni / 12 Notti", flight: "Volo A/R Linea", hotel: "Alpine Luxury Lodge", base: 6100, img: U + '1501785888041-af3ef285b470' + E, tag: "Pianeta Verde", sourceUrl: "https://www.newzealand-example.com" },
+            { id: 28, dest: "Mauritius", title: "Mauritius: Le Morne & Golf Paradise", desc: "Volo diretto, resort pieds dans l'eau con accesso a campo da golf da campionato e trattamenti spa quotidiani inclusi.", duration: "9 Giorni / 8 Notti", flight: "Volo Diretto A/R", hotel: "Beach Resort & Golf 5★", base: 3250, img: U + '1540206395-68808572332f' + E, tag: "Golf & Relax", sourceUrl: "https://www.mauritius-example.com" },
+            { id: 29, dest: "Oman", title: "Oman: Muscat e Architettura del Deserto", desc: "Volo di linea, tour delle fortezze storiche di Muscat e notte romantica in campo tendato di lusso sotto le stelle del deserto.", duration: "8 Giorni / 7 Notti", flight: "Volo + 4x4 Privato", hotel: "Desert Luxury Camp", base: 2700, img: U + '1548013146-72479768bada' + E, tag: "Mille e Una Notte", sourceUrl: "https://www.oman-example.com" },
+            { id: 30, dest: "Kenya", title: "Kenya: Masai Mara in Mongolfiera", desc: "Volo per Nairobi, trasferimenti in bush plane, safari fotografico nel Masai Mara e volo all'alba in mongolfiera con champagne.", duration: "9 Giorni / 8 Notti", flight: "Volo Interno + A/R", hotel: "Luxury Tented Camp", base: 4200, img: U + '1534567153574-2b12153a87f0' + E, tag: "Wildlife", sourceUrl: "https://www.kenyatravel-example.com" },
+            { id: 31, dest: "Vietnam", title: "Vietnam: Baia di Halong e Hanoi", desc: "Volo intercontinentale, crociera di lusso nella Baia di Halong e tour storico culturale tra i mercati e templi.", duration: "9 Giorni / 8 Notti", flight: "Volo Internazionale", hotel: "Boutique & Cruise 5★", base: 2500, img: U + '1528127269322-539801943592' + E, tag: "Culturale", sourceUrl: "https://www.vietnamtravel-example.com" },
+            { id: 32, dest: "Sri Lanka", title: "Sri Lanka: Templi, Tè e Safari", desc: "Volo di linea, tour privato delle piantagioni di tè, templi buddisti millenari e safari nel Parco Nazionale di Yala.", duration: "10 Giorni / 9 Notti", flight: "Volo + Driver Privato", hotel: "Tea Factory & Lodge", base: 2700, img: U + '1544735716-392fe2489ffa' + E, tag: "Natura & Storia", sourceUrl: "https://www.srilankatravel-example.com" },
+            { id: 33, dest: "Algeria", title: "Algeria: Il Deserto del Sahara & Le Oasi del Grand Erg", desc: "Volo di linea incluso, spedizione guidata in 4x4 nel cuore del Deserto del Sahara tra le dune dorate, campo tendato di lusso sotto le stelle e visita alle storiche oasi di Ghardaïa.", duration: "9 Giorni / 8 Notti", flight: "Volo Diretto + 4x4 Sahara", hotel: "Desert Luxury Camp & Lodge", base: 2600, img: U + '1473580044384-7ba9967e16a0' + E, tag: "Deserto del Sahara", sourceUrl: "https://www.algeriatravel-example.com" },
+            { id: 34, dest: "Finlandia", title: "Finlandia: Lapponia, Igloo di Vetro & Aurora Boreale", desc: "Volo diretto incluso, soggiorno in igloo dal tetto in vetro riscaldato per ammirare l'aurora boreale, safari con le renne e gli husky tra le foreste innevate e sauna tradizionale.", duration: "8 Giorni / 7 Notti", flight: "Volo Diretto incluso", hotel: "Glass Igloo Resort 4★S", base: 2900, img: U + '1517411032315-54ef2cb783bb' + E, tag: "Lapponia & Neve", sourceUrl: "https://www.finlandtravel-example.com" },
+            { id: 35, dest: "Marocco", title: "Marrakech: I Segreti della Medina & Riad di Lusso", desc: "Volo A/R, soggiorno esclusivo in Riad tradizionale con corte e piscina interna, tour privato nei suq di Marrakech, Giardini Majorelle e cena autentica marocchina.", duration: "6 Giorni / 5 Notti", flight: "Volo Diretto incluso", hotel: "Luxury Riad & Spa 5★", base: 1850, img: U + '1539020140153-e479b8c22e70' + E, tag: "Fascino d'Oriente", sourceUrl: "https://www.marocco.org/cosa-vedere-marocco/marrakech/cosa-vedere-marrakech/" },
+            { id: 36, dest: "Romania", title: "Romania: Bucarest, La Piccola Parigi dell'Est", desc: "Volo A/R diretto, soggiorno nel centro storico di Bucarest, tour guidato del maestoso Palazzo del Parlamento, Ateneo Rumeno e passeggiata tra le eleganti vie di Lipscani.", duration: "7 Giorni / 6 Notti", flight: "Volo Diretto incluso", hotel: "Boutique Hotel Center 4★", base: 1400, img: U + '1584646098378-0874589d76b1' + E, tag: "Cultura & Città", sourceUrl: "https://www.romaniatravel-example.com/bucharest" }
+        ];
+
+        function renderPackages(data) {
+            const container = document.getElementById('packagesContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            
+            let gridHtml = '<div class="packages-grid">';
+            data.forEach(pkg => {
+                const finalPrice = Math.round(pkg.base * INCREASE);
+                gridHtml += `
+                    <div class="package-card" data-dest="${pkg.dest.toLowerCase()}">
+                        <div class="card-img-wrapper">
+                            <span class="card-tag">${pkg.tag}</span>
+                            <img src="${pkg.img}" alt="${pkg.title}" loading="lazy">
+                        </div>
+                        <div class="card-body">
+                            <div class="card-meta">
+                                <span class="meta-pill">${pkg.dest}</span>
+                                <span class="meta-pill">${pkg.duration}</span>
+                            </div>
+                            <h3 class="card-title">${pkg.title}</h3>
+                            <p class="card-desc">${pkg.desc}</p>
+                            <div class="card-features">
+                                <span>✈️ ${pkg.flight}</span>
+                                <span>🏨 ${pkg.hotel}</span>
+                            </div>
+                            <div class="card-footer">
+                                <div class="price-box">
+                                    <span class="label">Prezzo Totale</span>
+                                    <span class="amount">€ ${finalPrice.toLocaleString('it-IT')}</span>
+                                </div>
+                                <button class="btn-book" onclick="openModal(${pkg.id})">Prenota Ora</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            gridHtml += '</div>';
+            container.innerHTML = gridHtml;
+        }
+
+        function filterPackages() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = packages.filter(p => 
+                p.dest.toLowerCase().includes(query) || 
+                p.title.toLowerCase().includes(query) || 
+                p.tag.toLowerCase().includes(query)
+            );
+            renderPackages(filtered);
+        }
+
+        function openModal(id) {
+            const pkg = packages.find(p => p.id === id);
+            if(!pkg) return;
+            const finalPrice = Math.round(pkg.base * INCREASE);
+            document.getElementById('packageIdHidden').value = pkg.id;
+            document.getElementById('modalPackageInfo').innerHTML = `Pacchetto Selezionato: <strong>${pkg.title}</strong> (${pkg.duration}) - Prezzo: <strong>€ ${finalPrice.toLocaleString('it-IT')}</strong><br><small style="color:var(--text-muted);">Codice Staff / Link Origine: <a href="${pkg.sourceUrl}" target="_blank" style="color:var(--teal);">${pkg.sourceUrl}</a></small>`;
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            const id = document.getElementById('packageIdHidden').value;
+            const pkg = packages.find(p => p.id == id);
+            const finalPrice = pkg ? Math.round(pkg.base * INCREASE) : 0;
+            
+            const clientData = {
+                packageId: id,
+                packageName: pkg ? pkg.title : '',
+                totalPrice: finalPrice,
+                nome: document.getElementById('clientNome').value,
+                cognome: document.getElementById('clientCognome').value,
+                email: document.getElementById('clientEmail').value,
+                phone: document.getElementById('clientPhone').value,
+                dob: document.getElementById('clientDob').value,
+                doc: document.getElementById('clientDoc').value,
+                address: document.getElementById('clientAddress').value,
+                notes: document.getElementById('clientNotes').value,
+                sourceUrl: pkg ? pkg.sourceUrl : ''
+            };
+
+            const subject = encodeURIComponent(`Nuova Prenotazione Global Tour - ${clientData.packageName}`);
+            const body = encodeURIComponent(
+                `Dettagli Prenotazione:\n\n` +
+                `Pacchetto: ${clientData.packageName}\n` +
+                `Prezzo Totale (con ricarico 15%): € ${clientData.totalPrice}\n` +
+                `Link Origine (Staff): ${clientData.sourceUrl}\n\n` +
+                `Dati Cliente:\n` +
+                `Nome: ${clientData.nome} ${clientData.cognome}\n` +
+                `Email: ${clientData.email}\n` +
+                `Telefono: ${clientData.phone}\n` +
+                `Data di Nascita: ${clientData.dob}\n` +
+                `Documento: ${clientData.doc}\n` +
+                `Indirizzo: ${clientData.address}\n` +
+                `Note: ${clientData.notes}\n`
+            );
+
+            window.location.href = `mailto:Servizihorizon@gmail.com?subject=${subject}&body=${body}`;
+            
+            alert('Richiesta inviata con successo! Verrai reindirizzato al client email per la trasmissione ufficiale allo staff di Global Tour.');
+            closeModal();
+            document.getElementById('bookingForm').reset();
+        }
+
+        window.onload = () => {
+            renderPackages(packages);
+        };
+    </script>
+</body>
+</html>
