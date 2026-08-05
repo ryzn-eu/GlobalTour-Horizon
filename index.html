@@ -445,31 +445,36 @@
             const pkg = packages.find(p => p.id == id);
             const finalPrice = pkg ? Math.round(pkg.base * INCREASE) : 0;
             
+            // Creazione dei dati organizzati per essere letti bene nella mail di Formsubmit
             const formData = {
-                packageId: id,
-                packageName: pkg ? pkg.title : '',
-                totalPrice: finalPrice,
-                sourceUrl: pkg ? pkg.sourceUrl : '',
-                nome: document.getElementById('clientNome').value,
-                cognome: document.getElementById('clientCognome').value,
-                email: document.getElementById('clientEmail').value,
-                phone: document.getElementById('clientPhone').value,
-                dob: document.getElementById('clientDob').value,
-                doc: document.getElementById('clientDoc').value,
-                address: document.getElementById('clientAddress').value,
-                notes: document.getElementById('clientNotes').value
+                _subject: "Nuova Prenotazione Global Tour: " + (pkg ? pkg.title : "Pacchetto Sconosciuto"),
+                Pacchetto_ID: id,
+                Nome_Pacchetto: pkg ? pkg.title : '',
+                Prezzo_Totale: "€ " + finalPrice.toLocaleString('it-IT'),
+                Link_Esterno: pkg ? pkg.sourceUrl : '',
+                Nome: document.getElementById('clientNome').value,
+                Cognome: document.getElementById('clientCognome').value,
+                Email_Cliente: document.getElementById('clientEmail').value,
+                Telefono: document.getElementById('clientPhone').value,
+                Data_Di_Nascita: document.getElementById('clientDob').value,
+                Documento: document.getElementById('clientDoc').value,
+                Indirizzo: document.getElementById('clientAddress').value,
+                Note: document.getElementById('clientNotes').value
             };
 
-            // Invia i dati al file send-mail.php sul tuo server
-            fetch('send-mail.php', {
+            // Invia i dati tramite Formsubmit AJAX senza ricaricare la pagina o aprire il client email
+            fetch('https://formsubmit.co/ajax/servizihorizon@gmail.com', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
                 if(data.success) {
-                    alert('Richiesta inviata con successo! Lo staff di Global Tour ti ricontatterà presto.');
+                    alert("Richiesta inviata con successo!).");
                     closeModal();
                     document.getElementById('bookingForm').reset();
                 } else {
@@ -478,7 +483,7 @@
             })
             .catch(error => {
                 console.error('Errore:', error);
-                alert('Errore di connessione al server.');
+                alert('Errore di connessione al servizio mail.');
             });
         }
         
